@@ -61,7 +61,7 @@ const AyahItem = (props) => {
   }, [playing, audioSrc]);
 
   const handleShare = () => {
-    const share = `http://localhost:3000/share/${props.surah}-${props.data.number.insurah}`;
+    const share = `https://waleedquranapp.netlify.app/share/${props.surah}-${props.data.number.insurah}`;
 
     try {
       copy(share);
