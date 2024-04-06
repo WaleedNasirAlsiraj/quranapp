@@ -186,7 +186,7 @@ const AyahItemShare = (props) => {
 
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle className="mb-5">Download</DialogTitle>
+                
                   <ImageGenerator
                     ayah={props.data?.ayah?.text?.ar}
                     translation={props.data?.ayah?.translation?.en}
