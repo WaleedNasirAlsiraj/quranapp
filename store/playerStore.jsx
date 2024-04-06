@@ -4,7 +4,8 @@ import { create } from "zustand";
 const initialState = {
   playing: false,
   repeat: false,
-  audioSrc: "waleed",
+  audioSrc: "",
+  surahNumber: 0,
 };
 
 export const usePlayerStore = create((set) => ({
@@ -25,6 +26,12 @@ export const usePlayerStore = create((set) => ({
     set(
       produce((state) => {
         state.audioSrc = value;
+      })
+    ),
+  setSurahNumber: (value) =>
+    set(
+      produce((state) => {
+        state.surahNumber = value;
       })
     ),
 }));

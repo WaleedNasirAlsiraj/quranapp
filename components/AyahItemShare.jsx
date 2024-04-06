@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "./ui/card";
+
 import {
   Bookmark,
   Ellipsis,
@@ -9,6 +10,7 @@ import {
   Download,
   Pause,
   BookmarkCheck,
+  Share,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import {
@@ -54,7 +56,7 @@ const AyahItemShare = (props) => {
   }, [playing, audioSrc]);
 
   const handleShare = () => {
-    const share = `https://waleedquranapp.netlify.app/share/${props.surah}-${props.data.ayah.number.insurah}`;
+    const share = `http://localhost:3000/share/${props.surah}-${props.data.ayah.number.insurah}`;
 
     try {
       copy(share);
@@ -81,6 +83,7 @@ const AyahItemShare = (props) => {
       (bookmark) =>
         bookmark.surah === surahNumber && bookmark.ayah === ayahNumber
     );
+
 
     if (index !== -1) {
       setIsBookmarked(true);
@@ -109,6 +112,19 @@ const AyahItemShare = (props) => {
         title: "Uh Oh! Something went wrong",
       });
     }
+  };
+
+  const handleDownload = () => {
+    const url = props.data.ayah.audio.url;
+    const filename = "audio.mp3";
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", props.data.ayah.audio.url);
+    link.download = filename;
+    link.target = "_blank";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -154,11 +170,15 @@ const AyahItemShare = (props) => {
                     <Copy className="mr-2" size={15} />
                     Copy
                   </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleDownload()}>
+                    <Download className="mr-2" size={15} />
+                    Download
+                  </DropdownMenuItem>
 
                   <DialogTrigger className="w-full">
                     <DropdownMenuItem className="w-full ">
-                      <Download className="mr-2" size={15} />
-                      Download
+                      <Share className="mr-2" size={15} />
+                      Export
                     </DropdownMenuItem>
                   </DialogTrigger>
                 </DropdownMenuContent>
@@ -171,13 +191,18 @@ const AyahItemShare = (props) => {
                     ayah={props.data?.ayah?.text?.ar}
                     translation={props.data?.ayah?.translation?.en}
                     audio={props.data?.ayah?.audio?.url}
+                    surah={props.surah}
+                    ayahNumber={props.data.ayah.number.insurah}
+                    surahName={props.data.surah.en.short}
                   />
                 </DialogHeader>
               </DialogContent>
             </Dialog>
           </div>
           <div className="flex flex-col gap-3 w-full">
-            <h1 className="text-2xl text-right">{props.data.ayah.text.ar} </h1>
+            <h1 className="arabic text-2xl text-right">
+              {props.data.ayah.text.ar}{" "}
+            </h1>
             <div className="">
               <p className="text-xs">Translation :</p>
               <p className="text-left text-sm">

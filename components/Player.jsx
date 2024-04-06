@@ -14,43 +14,47 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { usePlayerStore } from "@/store/playerStore";
+import { useRouter } from "next/navigation";
 
 const Player = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const audioRef = useRef();
+  const router = useRouter()
 
-  const { playing, audioSrc, repeat, setPlaying, setRepeat } = usePlayerStore(
-    (state) => ({
+  const { playing, audioSrc, repeat, setPlaying, setRepeat, surahNumber } =
+    usePlayerStore((state) => ({
       playing: state.playing,
       audioSrc: state.audioSrc,
       repeat: state.repeat,
       setPlaying: state.setPlaying,
       setRepeat: state.setRepeat,
-    })
-  );
+      surahNumber: state.surahNumber,
+    }));
 
   useEffect(() => {
+
+    repeat ? (audioRef.current.loop = true) : (audioRef.current.loop = false);
+
+    
+
     if (playing) {
       audioRef.current.play();
     } else {
       audioRef.current.pause();
     }
-  }, [playing, audioSrc]);
-
-  var audioProgress = (currentTime / audioRef?.current?.duration) * 100;
+  }, [playing, audioSrc, repeat]);
 
   useEffect(() => {
     // Update current time state when audio time updates
     const updateTime = () => {
-      setCurrentTime(audioRef.current.currentTime);
+      const newTime = audioRef?.current?.currentTime;
+      setCurrentTime(newTime);
     };
 
-    audioProgress = (currentTime / audioRef.current.duration) * 100;
-
-    audioRef.current?.addEventListener("timeupdate", updateTime);
+    audioRef?.current?.addEventListener("timeupdate", updateTime);
 
     return () => {
-      audioRef.current?.removeEventListener("timeupdate", updateTime);
+      audioRef?.current?.removeEventListener("timeupdate", updateTime) || null
     };
   }, []);
 
@@ -80,12 +84,17 @@ const Player = () => {
           <div className="flex flex-col w-[90vw] justify-center items-center gap-4">
             <div className="w-full flex flex-row justify-between items-center">
               <div className="flex flex-row justify-center items-center gap-2 w-full">
-                <Button variant="outline" size="smIcon">
-                  <Bookmark size={15} />
-                </Button>
-                <Button variant="outline" size="smIcon">
-                  <SkipBack size={20} />
-                </Button>
+                {parseInt(surahNumber) > 1 && (
+                  <Button
+                    onClick={() => {
+                      router.push(`/surah/${parseInt(surahNumber) - 1}`);
+                    }}
+                    variant="outline"
+                    size="smIcon"
+                  >
+                    <SkipBack size={20} />
+                  </Button>
+                )}
                 <Button
                   onClick={() => {
                     audioRef.current.pause();
@@ -96,9 +105,17 @@ const Player = () => {
                 >
                   {playing ? <Pause size={20} /> : <Play size={20} />}
                 </Button>
-                <Button variant="outline" size="smIcon">
-                  <SkipForward size={20} />
-                </Button>
+                {parseInt(surahNumber) < 114 && (
+                  <Button
+                    onClick={() => {
+                      router.push(`/surah/${parseInt(surahNumber) + 1}`);
+                    }}
+                    variant="outline"
+                    size="smIcon"
+                  >
+                    <SkipForward size={20} />
+                  </Button>
+                )}
                 <Button
                   onClick={() => setRepeat(!repeat)}
                   variant="outline"
@@ -110,7 +127,13 @@ const Player = () => {
             </div>
             <div className="w-full flex flex-row gap-3">
               <Slider
-                value={[audioProgress]}
+                onValueChange={(newValue) => {
+                  const newTime =
+                    (newValue / 100) * audioRef?.current?.duration;
+                  setCurrentTime(newTime);
+                  audioRef.current.currentTime = newTime;
+                }}
+                value={[(currentTime / audioRef?.current?.duration) * 100]}
                 defaultValue={[0]}
                 max={100}
                 step={1}
