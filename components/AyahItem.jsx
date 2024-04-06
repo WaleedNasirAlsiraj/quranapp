@@ -191,7 +191,7 @@ const AyahItem = (props) => {
 
             <DialogContent>
               <DialogHeader>
-                <DialogTitle className="mb-5">Download</DialogTitle>
+              
                 <ImageGenerator
                   ayah={props.data.text.ar}
                   translation={props.data.translation.en}
