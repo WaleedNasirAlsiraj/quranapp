@@ -484,7 +484,7 @@ const ImageGenerator = (props) => {
       <div className="mt-2 flex flex-row items-center justify-center">
         <div className="flex flex-row gap-4 items-center justify-between">
           <div className="flex flex-row gap-3 items-center justify-between">
-            <Select>
+            <Select className="max-w-[100px] " >
               <SelectTrigger >
                 <SelectValue placeholder="Content" />
               </SelectTrigger>
@@ -519,10 +519,11 @@ const ImageGenerator = (props) => {
             <Button
               variant={isDownloading ? "ghost" : "outline"}
               onClick={handleDownload}
+              size="icon"
               disabled={isDownloading}
             >
               <Download size={15} className="mr-2" />
-              Download
+              
             </Button>
           </div>
           <div className="">
@@ -531,10 +532,11 @@ const ImageGenerator = (props) => {
                 setImage(null);
                 fetchRandomNatureImage("2000", "1500");
               }}
+              size="icon"
               variant="outline"
             >
               <RefreshCcw size={15} className="mr-2" />
-              Regenerate
+              
             </Button>
           </div>
         </div>
