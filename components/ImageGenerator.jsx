@@ -484,7 +484,7 @@ const ImageGenerator = (props) => {
       <div className="mt-2 flex flex-row items-center justify-center">
         <div className="flex flex-row gap-4 items-center justify-between">
           <div className="flex flex-row gap-3 items-center justify-between">
-            <Select className="max-w-[100px] " >
+            <Select className="max-w-[140px] " >
               <SelectTrigger >
                 <SelectValue placeholder="Content" />
               </SelectTrigger>
@@ -522,7 +522,7 @@ const ImageGenerator = (props) => {
               size="icon"
               disabled={isDownloading}
             >
-              <Download size={15} className="mr-2" />
+              <Download size={20} className="" />
               
             </Button>
           </div>
@@ -535,7 +535,7 @@ const ImageGenerator = (props) => {
               size="icon"
               variant="outline"
             >
-              <RefreshCcw size={15} className="mr-2" />
+              <RefreshCcw size={20} className="" />
               
             </Button>
           </div>
