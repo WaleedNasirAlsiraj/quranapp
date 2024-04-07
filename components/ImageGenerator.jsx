@@ -483,7 +483,7 @@ const ImageGenerator = (props) => {
       </div>
       <div className="mt-2 flex flex-row items-center justify-center">
         <div className="flex flex-row gap-4 items-center justify-between">
-          <div className="flex flex-row gap-3 items-center justify-between">
+          {/*<div className="flex flex-row gap-3 items-center justify-between">
             <Select>
               <SelectTrigger className="w-[140px]">
                 <SelectValue placeholder="Content" />
@@ -514,7 +514,7 @@ const ImageGenerator = (props) => {
                 </div>
               </SelectContent>
             </Select>
-          </div>
+          </div>*/} 
           <div className="">
             <Button
               variant={isDownloading ? "ghost" : "outline"}
