@@ -137,6 +137,7 @@ const AyahItem = (props) => {
     >
       <div className="flex flex-row justify-between items-center gap-5">
         <div className="flex flex-col gap-2">
+          <p className="text-sm" >{props.surah}:{props.data.number.insurah}</p>
           <Button
             onClick={() => {
               isPlaying ? setPlaying(false) : setPlaying(true);
