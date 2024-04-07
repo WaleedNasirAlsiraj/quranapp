@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "./ui/card";
+import {motion} from 'framer-motion'
 import {
   Bookmark,
   Ellipsis,
@@ -131,89 +132,92 @@ const AyahItem = (props) => {
   };
 
   return (
-    <Card
-      id={ayahNumber}
-      className="p-5 bg-muted/40 opacity-70 transition-all hover:opacity-100 scale"
-    >
-      <div className="flex flex-row justify-between items-center gap-5">
-        <div className="flex flex-col gap-2">
-          <p className="text-sm" >{props.surah}:{props.data.number.insurah}</p>
-          <Button
-            onClick={() => {
-              isPlaying ? setPlaying(false) : setPlaying(true);
-              setIsPlaying(true);
-              setAudioSrc(props.data.audio.url);
-            }}
-            variant="outline"
-            size="smIcon"
-          >
-            {isPlaying ? <Pause size={15} /> : <Play size={15} />}
-          </Button>
-          <Button
-            onClick={() => bookmark()}
-            variant={isBookmarked ? "secondary" : "outline"}
-            size="smIcon"
-          >
-            {isBookmarked ? (
-              <BookmarkCheck size={15} />
-            ) : (
-              <Bookmark size={15} />
-            )}
-          </Button>
-          <Dialog>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="smIcon">
-                  <Ellipsis size={15} />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => handleShare()}>
-                  <Link className="mr-2" size={15} />
-                  Share
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleCopy()}>
-                  <Copy className="mr-2" size={15} />
-                  Copy
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleDownload()}>
-                  <Download className="mr-2" size={15} />
-                  Download
-                </DropdownMenuItem>
-
-                <DialogTrigger className="w-full">
-                  <DropdownMenuItem className="w-full ">
-                    <Share className="mr-2" size={15} />
-                    Export
+    <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
+      <Card
+        id={ayahNumber}
+        className="p-5 bg-muted/40 opacity-70 transition-all hover:opacity-100 scale"
+      >
+        <div className="flex flex-row justify-between items-center gap-5">
+          <div className="flex flex-col gap-2">
+            <p className="text-center text-sm w-full text-nowrap">{props.surah}:{props.data.number.insurah}</p>
+            <Button
+              onClick={() => {
+                isPlaying ? setPlaying(false) : setPlaying(true);
+                setIsPlaying(true);
+                setAudioSrc(props.data.audio.url);
+              }}
+              variant="outline"
+              size="smIcon"
+            >
+              {isPlaying ? <Pause size={15} /> : <Play size={15} />}
+            </Button>
+            <Button
+              onClick={() => bookmark()}
+              variant={isBookmarked ? "secondary" : "outline"}
+              size="smIcon"
+            >
+              {isBookmarked ? (
+                <BookmarkCheck size={15} />
+              ) : (
+                <Bookmark size={15} />
+              )}
+            </Button>
+            <Dialog>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="smIcon">
+                    <Ellipsis size={15} />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => handleShare()}>
+                    <Link className="mr-2" size={15} />
+                    Share
                   </DropdownMenuItem>
-                </DialogTrigger>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  <DropdownMenuItem onClick={() => handleCopy()}>
+                    <Copy className="mr-2" size={15} />
+                    Copy
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleDownload()}>
+                    <Download className="mr-2" size={15} />
+                    Download
+                  </DropdownMenuItem>
 
-            <DialogContent>
-              <DialogHeader>
-              
-                <ImageGenerator
-                  ayah={props.data.text.ar}
-                  translation={props.data.translation.en}
-                  audio={props.data.audio.url}
-                  surah={props.surah}
-                  ayahNumber={props.data.number.insurah}
-                  surahName={props.surahName}
-                />
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
-        </div>
-        <div className="flex flex-col gap-3 w-full">
-          <h1 className="arabic text-2xl text-right">{props.data.text.ar} </h1>
-          <div className="">
-            <p className="text-xs">Translation :</p>
-            <p className="text-left text-sm">{props.data.translation.en}</p>
+                  <DialogTrigger className="w-full">
+                    <DropdownMenuItem className="w-full ">
+                      <Share className="mr-2" size={15} />
+                      Export
+                    </DropdownMenuItem>
+                  </DialogTrigger>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <DialogContent>
+                <DialogHeader>
+                  <ImageGenerator
+                    ayah={props.data.text.ar}
+                    translation={props.data.translation.en}
+                    audio={props.data.audio.url}
+                    surah={props.surah}
+                    ayahNumber={props.data.number.insurah}
+                    surahName={props.surahName}
+                  />
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+          </div>
+          <div className="flex flex-col gap-3 w-full">
+            <h1 className="arabic text-2xl text-right">
+              {props.data.text.ar}{" "}
+            </h1>
+            <div className="">
+              <p className="text-xs">Translation :</p>
+              <p className="text-left text-sm">{props.data.translation.en}</p>
+            </div>
           </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </motion.div>
   );
 };
 

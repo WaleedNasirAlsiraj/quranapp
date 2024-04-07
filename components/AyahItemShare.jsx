@@ -132,6 +132,9 @@ const AyahItemShare = (props) => {
       <Card className="p-5 bg-muted/40 opacity-70 transition-all hover:opacity-100 scale">
         <div className="flex flex-row justify-between items-center gap-5">
           <div className="flex flex-col gap-2">
+            <p className="text-center text-sm w-full text-nowrap">
+              {surahNumber}:{ayahNumber}
+            </p>
             <Button
               onClick={() => {
                 isPlaying ? setPlaying(false) : setPlaying(true);
@@ -186,7 +189,6 @@ const AyahItemShare = (props) => {
 
               <DialogContent>
                 <DialogHeader>
-                
                   <ImageGenerator
                     ayah={props.data?.ayah?.text?.ar}
                     translation={props.data?.ayah?.translation?.en}
