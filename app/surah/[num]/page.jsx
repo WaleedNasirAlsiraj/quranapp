@@ -33,7 +33,7 @@ const Page = ({ params }) => {
     const fetchSurahData = async () => {
       try {
         const data = await fetch(
-          `https://quran-endpoint.vercel.app/quran/${params.num}?imamId=4`
+          `https://quran-endpoint.vercel.app/quran/${params.num}?imamId=42`
         );
         const dataJson = await data.json();
         // Once data is fetched, set the data state
